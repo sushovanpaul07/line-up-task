@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Texts from "./Texts";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-// import io from "socket.io-client";
-// import { sendText } from "../utils/socket";
-// import { Socket } from "../utils/socket";
+import io from "socket.io-client";
+import { sendText } from "../utils/socket";
+import { Socket } from "../utils/socket";
 let initialValues = {
   text: "",
 };
@@ -14,26 +14,26 @@ const Chat = ({ name }) => {
   const { id, chatName } = useParams();
   const [chatname, setChatname] = useState();
 
-  // useEffect(() => {
-  //   setSocket(Socket);
-  //   return () => Socket.close();
-  // }, [setSocket]);
+  useEffect(() => {
+    setSocket(Socket);
+    return () => Socket.close();
+  }, [setSocket]);
 
-  // useEffect(() => {
-  //   const messageListener = (message) => {
-  //     setTexts((prevMessages) => {
-  //       const newMessages = [...prevMessages];
-  //       newMessages.push(message);
-  //       return newMessages;
-  //     });
-  //   };
+  useEffect(() => {
+    const messageListener = (message) => {
+      setTexts((prevMessages) => {
+        const newMessages = [...prevMessages];
+        newMessages.push(message);
+        return newMessages;
+      });
+    };
 
-  //   socket.on("message", messageListener);
+    socket.on("message", messageListener);
 
-  //   return () => {
-  //     socket.off("message", messageListener);
-  //   };
-  // }, [socket]);
+    return () => {
+      socket.off("message", messageListener);
+    };
+  }, [socket]);
 
   const onSubmit = async (values, { resetForm }) => {
     initialValues.text = "";

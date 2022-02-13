@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router";
-// import { joinRoom } from "../utils/socket";
+import { joinRoom } from "../utils/socket";
 const ContactCard = ({ name, chatId, payload }) => {
   const navigate = useNavigate();
   const clickHandler = (val) => {
-    // joinRoom(payload);
+    joinRoom(payload);
     navigate(`/chat/${val}/${name}`);
   };
   return (
